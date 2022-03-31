@@ -3,6 +3,15 @@ __pycache__/
 *$py.class
 *.csv
 initialization_notebook.ipynb
+.kaggle
+kaggle.json
+install.sh*
+env
+venv
+#Entire contents of input folder
+input/*
+
+
 # C extensions
 *.so
 
