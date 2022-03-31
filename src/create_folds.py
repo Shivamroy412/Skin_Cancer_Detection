@@ -13,6 +13,8 @@ if __name__ == "__main__":
     kfold_model = model_selection.StratifiedKFold(n_splits = 10)
 
     for fold_, (train_idx_, valid_idx_) in enumerate(kfold_model.split(X=df, y=y)):
-        df.loc[:, "kfold"] = fold_
+        df.loc[valid_idx_ , "kfold"] = fold_
 
     df.to_csv("../input/train_folds.csv", index = False)
+    
+    print(df.kfold.value_counts())
