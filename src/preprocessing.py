@@ -29,8 +29,10 @@ if __name__ == "__main__":
 
         image_data_folder = os.path.join(config.DATA_PATH, "jpeg", folder_name)   
         all_images = glob.glob(os.path.join(image_data_folder, "*.jpg"))
-        Parallel(n_jobs = 12)(delayed(resize_single_image)(image_path_names, processed_image_path, (512, 512))
-                                        for image_path_names in tqdm(all_images))
+
+        for image_path_names in tqdm(all_images):
+            Parallel(n_jobs = 12)(delayed(resize_single_image)(image_path_names, processed_image_path, (512, 512)))
+                                            
         print(f"All {folder_name} images preprocessed")
 
 
