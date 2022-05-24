@@ -6,9 +6,9 @@ import config
 if __name__ == "__main__":
 
     df = pd.read_csv(os.path.join(config.DATA_PATH, "train.csv"))
-    df["kfold"] = -1
-    df = df.sample(frac=1).reset_index(drop = True)
     
+    df["kfold"] = -1
+
     y = df.target.values
 
     kfold_model = model_selection.StratifiedKFold(n_splits = 10, shuffle = True, random_state = 49 )
