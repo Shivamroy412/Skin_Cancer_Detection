@@ -1,4 +1,8 @@
 import os
+import torch
+
+#Defining Device for GPU operations
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #When training locally the folder sturctures are different
 training_local = True
@@ -11,11 +15,10 @@ DATA_PATH = os.path.join(os.path.sep, "kaggle","input","siim-isic-melanoma-class
 
 INPUT_PATH = os.path.join(os.path.sep, "kaggle","working","Skin_Cancer_Detection","input")
 
-
-
 if training_local:
     LOCAL_ROOT_PATH = os.path.join(os.path.sep, "Users", "ShivamRoy", "Development", "Python")
 
     INPUT_PATH = os.path.join(LOCAL_ROOT_PATH, INPUT_PATH[1:])
     DATA_PATH = os.path.join(LOCAL_ROOT_PATH, DATA_PATH[1:])
     #Sliced the path above to remove the leading '/' seperator
+
