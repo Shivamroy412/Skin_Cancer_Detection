@@ -4,6 +4,7 @@ import glob
 from PIL import Image, ImageFile
 from joblib import Parallel, delayed
 from tqdm import tqdm
+import config
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -31,7 +32,7 @@ if __name__ == "__main__":
         all_images = glob.glob(os.path.join(image_data_folder, "*.jpg"))
 
         for image_path_names in tqdm(all_images):
-            Parallel(n_jobs = 12)(delayed(resize_single_image)(image_path_names, processed_image_path, (512, 512)))
+            Parallel(n_jobs = 12)(delayed(resize_single_image)(image_path_names, processed_image_path, config.IMAGE_SIZE))
                                             
         print(f"All {folder_name} images preprocessed")
 

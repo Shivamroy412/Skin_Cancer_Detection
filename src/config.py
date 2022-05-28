@@ -7,6 +7,8 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 #When training locally the folder sturctures are different
 training_local = True
 
+#Image Size suitable for models to be run in preprocessing
+IMAGE_SIZE = (512, 512)
 
 #Defining absolute Paths for directories, the os.path.sep method below adds the forward slash
 #required for defining absolute Paths
