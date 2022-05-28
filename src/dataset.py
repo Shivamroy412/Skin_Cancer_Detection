@@ -35,7 +35,7 @@ class SkinCancerDataset:
         image = np.array(image)
 
         if not self.transforms:
-            self.transforms = T.Compose([T.ToTensor()])
+            self.transforms = T.ToTensor()
         
         image = self.transforms(image)
 

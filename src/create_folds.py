@@ -16,7 +16,7 @@ if __name__ == "__main__":
     for fold_, (train_idx_, valid_idx_) in enumerate(kfold_model.split(X=df, y=y)):
         df.loc[valid_idx_ , "kfold"] = fold_
 
-    
+
     os.makedirs(config.INPUT_PATH, exist_ok = True)
     df.to_csv(os.path.join(config.INPUT_PATH, "train_folds.csv"), index = False)
     
