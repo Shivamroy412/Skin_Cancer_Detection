@@ -6,8 +6,7 @@ from tqdm import tqdm
 
 
 class ResNext_model(nn.Module):
-    def __init__(self, freeze_pretrained_weights = True, 
-                mean = (0.485, 0.456, 0.406), std = (0.229, 0.224, 0.225)):
+    def __init__(self, freeze_pretrained_weights = True):
 
         super(ResNext_model, self).__init__()
 
@@ -22,11 +21,6 @@ class ResNext_model(nn.Module):
             for param in self.model.parameters():
                 param.requires_grad = False
             self.model.fc.requires_grad = True
-
-
-        self.mean = mean
-        self.std = std
-
 
         def forward(self, images):
             return self.model(images)

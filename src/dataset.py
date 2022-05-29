@@ -29,6 +29,7 @@ class SkinCancerDataset:
 
     def __getitem__(self, idx):
 
+    
         target = self.target[idx]
 
         image = Image.open(self.image_paths[idx])
@@ -38,8 +39,10 @@ class SkinCancerDataset:
             self.transforms = T.ToTensor()
         
         image = self.transforms(image)
-
         return image, target
+
+
+
 
 #Tests
 #data = SkinCancerDataset([0])

@@ -4,14 +4,28 @@ import torch
 #Defining Device for GPU operations
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-#When training locally the folder sturctures are different
-training_local = True
 
+# PREPROCESSING
 #Image Size suitable for models to be run in preprocessing
 IMAGE_SIZE = (512, 512)
+#Number of Folds
+N_FOLDS = 10
 
+
+
+# MODEL SPECIFICATIONS
+EPOCHS = 100
+TRAIN_BATCH_SIZE = 64
+VAL_BATCH_SIZE = 32
+
+
+
+# PATHS
 #Defining absolute Paths for directories, the os.path.sep method below adds the forward slash
 #required for defining absolute Paths
+
+#When training locally the folder sturctures are different
+training_local = True
 
 DATA_PATH = os.path.join(os.path.sep, "kaggle","input","siim-isic-melanoma-classification")
 

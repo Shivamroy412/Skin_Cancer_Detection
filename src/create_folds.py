@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     y = df.target.values
 
-    kfold_model = model_selection.StratifiedKFold(n_splits = 10, shuffle = True, random_state = 49 )
+    kfold_model = model_selection.StratifiedKFold(n_splits = config.N_FOLDS, shuffle = True, random_state = 49 )
 
     for fold_, (train_idx_, valid_idx_) in enumerate(kfold_model.split(X=df, y=y)):
         df.loc[valid_idx_ , "kfold"] = fold_
