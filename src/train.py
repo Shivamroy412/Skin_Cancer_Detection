@@ -55,11 +55,32 @@ def train(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std =
     #Running Epochs 
     for epoch in range(config.EPOCHS):
 
+        #Trainig
         model.train() #Activating the train mode for the model
 
         for batch_idx, data in tqdm(enumerate(train_loader), 
                                     total = int(len(train_dataset) / train_loader.batch_size)):
-            pass
+            images, labels = data
+
+            #Mounting data to GPU if available
+            images = images.to(config.DEVICE)
+            labels = labels.to(config.DEVICE)
+
+            #Empyting gradients
+            optimizer.zero_grad()
+
+            #Calculating outputs from the model
+            outputs = model(images)
+
+            #Calculating loss
+            #The BCEWithLogitsLoss compensates for the absence of Sigmoid function around outputs
+            #and then works same as Cross Entropy Loss
+            loss = torch.nn.BCEWithLogitsLoss()(outputs, labels.reshape(-1, 1).as_type(outputs))
+
+            #Backward Propagation Step
+            loss.backward()
+            optimizer.step()
+
 
 
 

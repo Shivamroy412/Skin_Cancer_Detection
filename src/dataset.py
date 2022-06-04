@@ -47,5 +47,5 @@ class SkinCancerDataset:
 
 #Tests
 #data = SkinCancerDataset([0])
-#print(data[0])
-#print(data[0][0].shape)
+#print(data)
+#print(data[0][1].shape)
