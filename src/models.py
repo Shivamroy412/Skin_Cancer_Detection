@@ -1,8 +1,11 @@
 import torch.nn as nn
 from torch.nn import functional as F
+from torch.utils.data import DataLoader
 import torchvision.models 
 import torch
 from tqdm import tqdm
+from dataset import SkinCancerDataset
+import config
 
 
 class ResNext_model(nn.Module):
@@ -27,7 +30,17 @@ class ResNext_model(nn.Module):
 
         
 #Normalize using the mean and standard deviation of this particular dataset or imagenet values
-def get_mean_std(data_loader):
+def get_mean_std():
+
+    all_folds = [i for i in range(config.N_FOLDS)]
+
+    dataset = SkinCancerDataset(all_folds)
+    data_loader = DataLoader(dataset= dataset, 
+                                batch_size = config.TRAIN_BATCH_SIZE, 
+                                shuffle = False, 
+                                num_workers = 4)
+
+
     channel_wise_sum, channel_wise_squared_sum, num_batches = 0, 0, 0
 
     print("Calculating mean and standard deviation over the entire dataset")
