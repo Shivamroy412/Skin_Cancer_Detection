@@ -19,7 +19,6 @@ TRAIN_BATCH_SIZE = 64
 VAL_BATCH_SIZE = 32
 
 
-
 # PATHS
 #Defining absolute Paths for directories, the os.path.sep method below adds the forward slash
 #required for defining absolute Paths
