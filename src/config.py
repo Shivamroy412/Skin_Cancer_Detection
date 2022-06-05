@@ -32,11 +32,14 @@ INPUT_PATH = os.path.join(os.path.sep, "kaggle","working","Skin_Cancer_Detection
 
 SRC_PATH = os.path.join(os.path.sep, "kaggle","working","Skin_Cancer_Detection","src")
 
+MODEL_PATH = os.path.join(os.path.sep, "kaggle","working","Skin_Cancer_Detection","model")
+
 if training_local:
     LOCAL_ROOT_PATH = os.path.join(os.path.sep, "Users", "ShivamRoy", "Development", "Python")
 
     INPUT_PATH = os.path.join(LOCAL_ROOT_PATH, INPUT_PATH[1:])
     DATA_PATH = os.path.join(LOCAL_ROOT_PATH, DATA_PATH[1:])
     SRC_PATH = os.path.join(LOCAL_ROOT_PATH, SRC_PATH[1:])
+    MODEL_PATH = os.path.join(LOCAL_ROOT_PATH, MODEL_PATH[1:])
     #Sliced the path above to remove the leading '/' seperator
 
