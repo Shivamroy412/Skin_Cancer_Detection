@@ -1,14 +1,14 @@
 import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as T
-import tqdm
+from tqdm import tqdm
 
 import config
 from dataset import SkinCancerDataset
 import models
 
 
-def train(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = (229, 224, 225)):
+def main(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = (229, 224, 225)):
 
     #Definig the model
     model = models.ResNext_model(False)
@@ -86,9 +86,11 @@ def train(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std =
         model.eval() #Activating the eval mode for the model
 
         final_loss = 0 #Initiating final loss
+        counter = 0 # Used as a denominator to calculate the average loss
 
         for batch_idx, data in tqdm(enumerate(val_loader), 
                                     total = int(len(val_dataset) / val_loader.batch_size)):
+            couner += 1
             images, labels = data
 
             #Mounting data to GPU if available
@@ -104,7 +106,8 @@ def train(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std =
             loss = torch.nn.BCEWithLogitsLoss()(outputs, labels.reshape(-1, 1).as_type(outputs))
 
             final_loss += loss
-
+        
+        return final_loss / counter
 
 
 if __name__ == "__main__":
@@ -118,4 +121,4 @@ if __name__ == "__main__":
         #Gives a list containing all folds except the particular validation_fold
 
         #Call training function and start training the model
-        train(train_folds = train_folds, val_fold = [validation_fold], mean = data_mean, std = data_std )
+        mean_loss = main(train_folds = train_folds, val_fold = [validation_fold], mean = data_mean, std = data_std )
