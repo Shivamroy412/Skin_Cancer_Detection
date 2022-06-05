@@ -4,6 +4,8 @@ from torch.utils.data import DataLoader
 import torchvision.models 
 import torch
 from tqdm import tqdm
+import os
+import pickle
 from dataset import SkinCancerDataset
 import config
 
@@ -32,29 +34,39 @@ class ResNext_model(nn.Module):
 #Normalize using the mean and standard deviation of this particular dataset or imagenet values
 def get_mean_std():
 
-    all_folds = [i for i in range(config.N_FOLDS)]
+    mean_std_file_name = "mean_std.pkl"
+    mean_std_file_path = os.path.join(config.MODEL_PATH, mean_std_file_name)
 
-    dataset = SkinCancerDataset(all_folds)
-    data_loader = DataLoader(dataset= dataset, 
-                                batch_size = config.TRAIN_BATCH_SIZE, 
-                                shuffle = False, 
-                                num_workers = 4)
+    if mean_std_file_path.exists():
+        with open(mean_std_file_path, 'rb') as file:
+            mean, std = pickle.load(file)
 
+    else:
+        all_folds = [i for i in range(config.N_FOLDS)]
 
-    channel_wise_sum, channel_wise_squared_sum, num_batches = 0, 0, 0
+        dataset = SkinCancerDataset(all_folds)
+        data_loader = DataLoader(dataset= dataset, 
+                                    batch_size = config.TRAIN_BATCH_SIZE, 
+                                    shuffle = False, 
+                                    num_workers = 4)
 
-    print("Calculating mean and standard deviation over the entire dataset")
+        channel_wise_sum, channel_wise_squared_sum, num_batches = 0, 0, 0
 
-    for image_batch, _ in tqdm(data_loader):
-        channel_wise_sum += torch.mean(image_batch, dim = [0, 2, 3])
-        channel_wise_squared_sum += torch.mean(image_batch**2, dim = [0, 2, 3])
-        #The [0, 2, 3] implies the dimensions of batchsize, height and width
-        #This would give the mean for each channel
+        print("Calculating mean and standard deviation over the entire dataset")
 
-        num_batches += 1
+        for image_batch, _ in tqdm(data_loader):
+            channel_wise_sum += torch.mean(image_batch, dim = [0, 2, 3])
+            channel_wise_squared_sum += torch.mean(image_batch**2, dim = [0, 2, 3])
+            #The [0, 2, 3] implies the dimensions of batchsize, height and width
+            #This would give the mean for each channel
 
-    mean = channel_wise_sum / num_batches
-    std = ( (channel_wise_squared_sum / num_batches) - mean**2 ) ** 0.5
+            num_batches += 1
+
+        mean = channel_wise_sum / num_batches
+        std = ( (channel_wise_squared_sum / num_batches) - mean**2 ) ** 0.5
+
+        with open(mean_std_file_path, 'wb') as file:
+            pickle.dump((mean, std), file)
 
     return mean, std
 
