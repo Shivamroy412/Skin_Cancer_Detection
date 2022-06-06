@@ -71,13 +71,6 @@ def get_mean_std():
     return mean, std
 
 
-
-
-
-
-
-
-
 #Tests
 # from dataset import SkinCancerDataset
 # from torchsummary import summary

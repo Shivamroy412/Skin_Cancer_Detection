@@ -107,7 +107,11 @@ def main(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = 
 
             final_loss += loss
         
-        return final_loss / counter
+        mean_loss = final_loss / counter 
+
+        scheduler.step(mean_loss) #Reduce LR if loss starts plateauing
+
+        return mean_loss
 
 
 if __name__ == "__main__":
