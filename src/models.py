@@ -37,7 +37,7 @@ def get_mean_std():
     mean_std_file_name = "mean_std.pkl"
     mean_std_file_path = os.path.join(config.MODEL_PATH, mean_std_file_name)
 
-    if mean_std_file_path.exists():
+    if os.path.exists(mean_std_file_path):
         with open(mean_std_file_path, 'rb') as file:
             mean, std = pickle.load(file)
 
