@@ -37,7 +37,6 @@ class SkinCancerDataset:
         target = self.target[idx]
 
         image = Image.open(self.image_paths[idx])
-        image = np.array(image)
 
         if config.resize_on_load:
             image = T.Resize(config.IMAGE_SIZE)(image)
