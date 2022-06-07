@@ -15,8 +15,12 @@ class SkinCancerDataset:
         df = df.loc[df.kfold.isin(folds)].reset_index(drop= True)
 
         image_names = df.image_name.to_numpy()
-        self.image_paths = [os.path.join(config.INPUT_PATH, "processed_img_train", 
-                                 file_name + ".jpg") for file_name in image_names]
+        if config.resize_on_load:
+            self.image_paths = [os.path.join(config.DATA_PATH, "jpeg", "train", 
+                                    file_name + ".jpg") for file_name in image_names]
+        else:
+            self.image_paths = [os.path.join(config.INPUT_PATH, "processed_img_train", 
+                                    file_name + ".jpg") for file_name in image_names]
 
         self.target = torch.tensor(df.target.to_numpy())
         self.transforms = transforms
@@ -34,6 +38,9 @@ class SkinCancerDataset:
 
         image = Image.open(self.image_paths[idx])
         image = np.array(image)
+
+        if config.resize_on_load:
+            image = T.Resize(config.IMAGE_SIZE)(image)
 
         if not self.transforms:
             self.transforms = T.ToTensor()

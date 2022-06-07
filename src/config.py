@@ -25,6 +25,9 @@ VAL_BATCH_SIZE = 32
 #When training locally the folder sturctures are different
 training_local = True
 
+#Resizing done through dataset class or separately resized images
+resize_on_load = True
+
 DATA_PATH = os.path.join(os.path.sep, "kaggle","input","siim-isic-melanoma-classification")
 
 INPUT_PATH = os.path.join(os.path.sep, "kaggle","working","Skin_Cancer_Detection","input")
