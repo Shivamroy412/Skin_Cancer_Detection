@@ -27,8 +27,8 @@ class ResNext_model(nn.Module):
                 param.requires_grad = False
             self.model.fc.requires_grad = True
 
-        def forward(self, images):
-            return self.model(images)
+    def forward(self, images):
+        return self.model(images)
 
         
 #Normalize using the mean and standard deviation of this particular dataset or imagenet values
