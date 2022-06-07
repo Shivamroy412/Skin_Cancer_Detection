@@ -18,12 +18,12 @@ def main(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = 
 
     #Define Transformations
     train_tranforms = T.Compose([T.RandomHorizontalFlip(), 
-                                 T.RandomVerticalFlip(),
-                                 T.Normalize(mean, std), 
-                                 T.ToTensor()])
+                                 T.RandomVerticalFlip(), 
+                                 T.ToTensor(),
+                                 T.Normalize(mean, std)])
 
-    val_tranforms = T.Compose([ T.Normalize(mean, std), 
-                                 T.ToTensor()])
+    val_tranforms = T.Compose([ T.ToTensor(),
+                                T.Normalize(mean, std)])
     
 
     #Defining Train Dataset and DataLoader
@@ -31,18 +31,18 @@ def main(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = 
     train_loader = DataLoader(dataset= train_dataset, 
                                 batch_size = config.TRAIN_BATCH_SIZE, 
                                 shuffle = True, 
-                                num_workers = 4)
+                                num_workers = 2)
 
     #Defining Validation Dataset and DataLoader
     val_dataset = SkinCancerDataset(val_fold, transforms= val_tranforms)
     val_loader = DataLoader(dataset= val_dataset, 
                                 batch_size = config.VAL_BATCH_SIZE, 
                                 shuffle = False, 
-                                num_workers = 4)
+                                num_workers = 2)
  
 
     #Get mean and standard deviation over the entire dataset
-    mean, std = models.get_mean_std(train_loader)
+    mean, std = models.get_mean_std()
 
     #Defining the optimizer, leaving the default hyperparameters like lr
     optimizer = torch.optim.Adam(model.parameters())
