@@ -28,6 +28,11 @@ training_local = True
 #Resizing done through dataset class or separately resized images
 resize_on_load = True
 
+#Due to the large file sizes the GPU can't handle the batch_size of 64 or even 32
+if resize_on_load:
+    TRAIN_BATCH_SIZE = 8
+    VAL_BATCH_SIZE = 8
+
 DATA_PATH = os.path.join(os.path.sep, "kaggle","input","siim-isic-melanoma-classification")
 
 INPUT_PATH = os.path.join(os.path.sep, "kaggle","working","Skin_Cancer_Detection","input")

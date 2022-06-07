@@ -75,7 +75,7 @@ def main(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = 
             #Calculating loss
             #The BCEWithLogitsLoss compensates for the absence of Sigmoid function around outputs
             #and then works same as Cross Entropy Loss
-            loss = torch.nn.BCEWithLogitsLoss()(outputs, labels.reshape(-1, 1).as_type(outputs))
+            loss = torch.nn.BCEWithLogitsLoss()(outputs, labels.reshape(-1, 1).float())
 
             #Backward Propagation Step
             loss.backward()
@@ -103,7 +103,7 @@ def main(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = 
             #Calculating loss
             #The BCEWithLogitsLoss compensates for the absence of Sigmoid function around outputs
             #and then works same as Cross Entropy Loss
-            loss = torch.nn.BCEWithLogitsLoss()(outputs, labels.reshape(-1, 1).as_type(outputs))
+            loss = torch.nn.BCEWithLogitsLoss()(outputs, labels.reshape(-1, 1).float())
 
             final_loss += loss
         
@@ -128,4 +128,4 @@ if __name__ == "__main__":
         #Gives a list containing all folds except the particular validation_fold
 
         #Call training function and start training the model
-        mean_loss = main(train_folds = train_folds, val_fold = [validation_fold], mean = data_mean, std = data_std )
+        main(train_folds = train_folds, val_fold = [validation_fold], mean = data_mean, std = data_std )
