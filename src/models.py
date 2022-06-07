@@ -65,6 +65,11 @@ def get_mean_std():
         mean = channel_wise_sum / num_batches
         std = ( (channel_wise_squared_sum / num_batches) - mean**2 ) ** 0.5
 
+        print(f"Dataset Mean {mean}  Standard Deviation  {std}")
+
+        if not os.path.exists(config.MODEL_PATH):
+            os.makedirs(config.MODEL_PATH)
+
         with open(mean_std_file_path, 'wb') as file:
             pickle.dump((mean, std), file)
 
