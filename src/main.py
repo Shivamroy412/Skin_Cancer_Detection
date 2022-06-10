@@ -90,7 +90,7 @@ def main(train_folds: list, val_fold: list, mean = (0.485, 0.456, 0.406), std = 
 
         for batch_idx, data in tqdm(enumerate(val_loader), 
                                     total = int(len(val_dataset) / val_loader.batch_size)):
-            couner += 1
+            counter += 1
             images, labels = data
 
             #Mounting data to GPU if available
